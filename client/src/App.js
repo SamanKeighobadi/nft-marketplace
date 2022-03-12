@@ -1,13 +1,12 @@
 import React  from "react";
-import AppNavbar from "./components/AppNavbar";
-// React Router DOM
+import MainLayout from "./components/layout/MainLayout";
+
 
 const App = () =>{
   return (
-    <div>
-    <AppNavbar />
+    <MainLayout>
       <h1>NFT marketeplace</h1>
-    </div>
+    </MainLayout>
   )
 }
 
