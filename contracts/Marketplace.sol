@@ -11,24 +11,44 @@ contract Marketplace is ReentrancyGuard {
     uint256 public itemCount;
 
     struct Item {
-        uint itemId;
+        uint256 itemId;
         IERC721 nft;
-        uint tokenId;
-        uint price;
+        uint256 tokenId;
+        uint256 price;
         address payable seller;
         bool sold;
     }
 
-    mapping(uint => Item) public items;
+    mapping(uint256 => Item) public items;
+    // Define events
+    event Offered(
+        uint256 itemId,
+        address indexed nft,
+        uint256 tokenId,
+        uint256 price,
+        address indexed seller
+    );
+    event Bought(
+        uint256 itemId,
+        address indexed nft,
+        uint256 tokenId,
+        uint256 price,
+        address indexed seller,
+        address indexed buyer
+    );
 
     constructor(uint256 _feePercent) {
         feeAccount = payable(msg.sender);
         feePercent = _feePercent;
     }
 
-    function makeItem(IERC721 _nft,uint _tokenId,uint _price) external nonReentrant {
-        require(_price>0,"must be greater than zero" );
-        itemCount ++;
+    function makeItem(
+        IERC721 _nft,
+        uint256 _tokenId,
+        uint256 _price
+    ) external nonReentrant {
+        require(_price > 0, "must be greater than zero");
+        itemCount++;
 
         _nft.transferFrom(msg.sender, address(this), _tokenId);
 
@@ -40,6 +60,8 @@ contract Marketplace is ReentrancyGuard {
             payable(msg.sender),
             false
         );
-    }
 
+        // emit  Event
+        emit Offered(itemCount, address(_nft), _tokenId, _price, msg.sender);
+    }
 }
