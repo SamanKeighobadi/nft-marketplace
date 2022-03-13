@@ -5,8 +5,14 @@ module.exports = {
   // to customize your Truffle configuration!
   contracts_build_directory: path.join(__dirname, "client/src/abis"),
   networks: {
-    development: {
+    develop: {
       port: 8545
     }
-  }
+  },
+  compilers: {
+    solc: {
+      version: "0.8.4",    // Fetch exact version from solc-bin (default: truffle's version)
+     
+    },
+  },
 };
