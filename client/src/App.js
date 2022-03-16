@@ -52,7 +52,7 @@ const App = () => {
   }, []);
 
   return (
-    <MainLayout>
+    <MainLayout account={account}>
       {loading ? (
         <div>Loading...</div>
       ) : (

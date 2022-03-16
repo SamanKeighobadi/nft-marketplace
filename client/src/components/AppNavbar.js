@@ -2,7 +2,12 @@ import React from "react";
 // React Router DOM
 import { Link } from "react-router-dom";
 
-const AppNavbar = () => {
+const AppNavbar = ({ account }) => {
+
+  const copyToClipboard = (text ) =>{
+    navigator.clipboard.writeText(text);
+  }
+
   return (
     <div>
       <nav
@@ -11,6 +16,7 @@ const AppNavbar = () => {
       >
         <div className="container-fluid">
           <a className="navbar-brand" href="#"></a>
+
           <button
             className="navbar-toggler"
             type="button"
@@ -46,6 +52,9 @@ const AppNavbar = () => {
                 </Link>
               </li>
             </ul>
+            <span onClick={() =>copyToClipboard(account)} className="text-white">
+              {account}
+            </span>
           </div>
         </div>
       </nav>
