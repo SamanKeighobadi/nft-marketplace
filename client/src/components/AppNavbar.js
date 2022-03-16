@@ -1,12 +1,20 @@
 import React from "react";
 // React Router DOM
 import { Link } from "react-router-dom";
+// Sweetalert 2
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const AppNavbar = ({ account }) => {
+  const Alert = withReactContent(Swal);
 
-  const copyToClipboard = (text ) =>{
+  const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
-  }
+    Alert.fire({
+      icon: "success",
+      title: "copied to clipboard",
+    });
+  };
 
   return (
     <div>
@@ -52,7 +60,10 @@ const AppNavbar = ({ account }) => {
                 </Link>
               </li>
             </ul>
-            <span onClick={() =>copyToClipboard(account)} className="text-white">
+            <span
+              onClick={() => copyToClipboard(account)}
+              className="text-white"
+            >
               {account}
             </span>
           </div>

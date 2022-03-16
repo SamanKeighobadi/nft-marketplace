@@ -8,13 +8,18 @@ import Home from "./pages/Home";
 import CreateNFT from "./pages/CreateNFT";
 import Purchases from "./pages/Purchases/Purchases";
 import Lists from "./pages/nft-lists/Lists";
-
+// Sweet alert2
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+// load web3.js and blockchain 
 import Web3 from "web3";
 import MarketPlace from "./abis/MarketPlace.json";
 
 const App = () => {
   const [account, setAccount] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const Alert = withReactContent(Swal);
 
   const loadWeb3 = async () => {
     try {
@@ -25,6 +30,10 @@ const App = () => {
         window.web3 = new Web3(window.web3.currentProvider);
       } else {
         setLoading(true);
+        Alert.fire({
+          icon:'info',
+          title:"Install metamask"
+        })
       }
     } catch (err) {
       console.log(err);
