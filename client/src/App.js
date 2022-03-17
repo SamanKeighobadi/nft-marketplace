@@ -62,10 +62,6 @@ const App = () => {
       setMarketplace(marketplace)
       setNft(nft);
 
-      const saman = await marketplace.methods.itemCount().call();
-      console.log(saman);
-
-
 
       setLoading(false);
     } catch (err) {
@@ -86,7 +82,7 @@ const App = () => {
       ) : (
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/create" element={<CreateNFT />} />
+          <Route path="/create" element={<CreateNFT marketplace={marketplace} nft={nft} />} />
           <Route path="/purchases" element={<Purchases />} />
           <Route path="/items-list" element={<Lists />} />
         </Routes>

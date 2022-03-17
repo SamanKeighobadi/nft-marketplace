@@ -1,17 +1,41 @@
 import React,{useState} from "react";
-const CreateNFT = () => {
+import {create as ipfsHttpClient} from 'ipfs-http-client'
+const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
+const CreateNFT = ({marketplace,nft}) => {
+
+  
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState('');
+  const [file, setFile] = useState({});
+  const [image, setImage] = useState('');
 
-  const handleOnSubmit = (e) =>{
-    e.preventDefault()
-    console.log(name);
-  console.log(price);
-  console.log(description);
+  const handleOnSubmit = async (e) =>{
+    e.preventDefault();
+
+    if(typeof file !== 'undefined'){
+        try {
+          const result = await client.add(file)
+          console.log(result);
+          const imageUrl = `https://ipfs.infura.io:5001/api/v0/${result.path}`
+          setImage(imageUrl);
+        } catch (ex) {
+          console.log(ex);
+        }
+    }
+
   }
+
+  const mintToken = async() =>{
+      try {
+     
+      } catch (ex) {
+        console.log(ex);
+      }
+  }
+  mintToken()
 
   return (
     <div className="container-fluid mt-5">
@@ -25,7 +49,7 @@ const CreateNFT = () => {
             <form onSubmit={e =>handleOnSubmit(e)} className="g-4 card-body">
               <div className="mb-3">
                 <lable  >Upload File</lable>
-                <input type={"file"} className="form-control mt-3" />
+                <input type={"file"} onChange={e => setFile(e.target.files[0])} className="form-control mt-3" />
               </div>
               <div className="mb-3">
                 <label  className="form-label">
