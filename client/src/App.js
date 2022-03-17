@@ -14,12 +14,17 @@ import withReactContent from "sweetalert2-react-content";
 // load web3.js and blockchain 
 import Web3 from "web3";
 import MarketPlace from "./abis/MarketPlace.json";
+import NFT from './abis/NFT.json'
 
 const App = () => {
   const [account, setAccount] = useState("");
   const [loading, setLoading] = useState(true);
+  const [nft, setNft] = useState({});
+  const [marketplace, setMarketplace] = useState({});
 
   const Alert = withReactContent(Swal);
+
+
 
   const loadWeb3 = async () => {
     try {
@@ -40,6 +45,8 @@ const App = () => {
     }
   };
 
+  
+
   const loadBlockchain = async () => {
     try {
       const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
@@ -49,11 +56,23 @@ const App = () => {
       const networkId = await web3.eth.net.getId();
       const networkData = await MarketPlace.networks[networkId];
 
+      const marketplace = new web3.eth.Contract(MarketPlace.abi,networkData.address)
+      const nft = new web3.eth.Contract(NFT.abi,NFT.networks[networkId])
+    
+      setMarketplace(marketplace)
+      setNft(nft);
+
+      const saman = await marketplace.methods.itemCount().call();
+      console.log(saman);
+
+
+
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
+
 
   useEffect(() => {
     loadWeb3();

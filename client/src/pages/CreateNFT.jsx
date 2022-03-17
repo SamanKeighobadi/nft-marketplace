@@ -1,5 +1,18 @@
-import React from "react";
+import React,{useState} from "react";
 const CreateNFT = () => {
+
+
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState(0);
+  const [description, setDescription] = useState('');
+
+  const handleOnSubmit = (e) =>{
+    e.preventDefault()
+    console.log(name);
+  console.log(price);
+  console.log(description);
+  }
+
   return (
     <div className="container-fluid mt-5">
       <div className="row">
@@ -9,36 +22,53 @@ const CreateNFT = () => {
           style={{ maxWidth: "1000px" }}
         >
           <div className="content mx-auto card">
-            <div className="g-4 card-body">
+            <form onSubmit={e =>handleOnSubmit(e)} className="g-4 card-body">
               <div className="mb-3">
-                <lable for="File" >Upload File</lable>
+                <lable  >Upload File</lable>
                 <input type={"file"} className="form-control mt-3" />
               </div>
-              <div class="mb-3">
-                <label for="name" class="form-label">
+              <div className="mb-3">
+                <label  className="form-label">
                   Name
                 </label>
                 <input
-                  type="email"
-                  class="form-control"
+                  type="text"
+                  className="form-control"
                   id="name"
                   placeholder="name@example.com"
+                  value={name}
+                  onChange={(e) => setName(e.target.value) }
                 />
               </div>
-              <div class="mb-3">
-                <label for="description" class="form-label">
+              <div className="mb-3">
+                <label htmlFor="price" className="form-label">
+                  Price 
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="price"
+                  placeholder="NFT Price"
+                  value={price}
+                  onChange={e => setPrice(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label  className="form-label">
                   Description
                 </label>
                 <textarea
-                  class="form-control"
+                  className="form-control"
                   id="description"
                   rows="3"
+                  value={description}
+                  onChange={e => setDescription(e.target.value)}
                 ></textarea>
                 <button className="btn btn-primary  btn-sm  w-100 mt-3 " type="submit" >
                     Submit
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </main>
       </div>
